@@ -48,16 +48,17 @@ var r5 = tools.root('/lib', '..', './public') // => path_to/project2/public
 #### hash([value], [encoding], [algorithm])
 
 The function returns a hash.
-The [`crypto`](http://nodejs.org/api/crypto.html#crypto_class_hash) module is used.
+The [node.js crypto module](http://nodejs.org/api/crypto.html#crypto_class_hash) is used.
 
 When the function is called without `value`, a random value is used. 
 
 ```
 // various possible options
-encoding  = [hex  | binary | base64]
-algorithm = [sha1 | sha256 | sha512]
+// encoding  = [hex  | binary | base64]
+// algorithm = [sha1 | sha256 | sha512]
 
-var h = tools.hash(value [= random], encoding [= 'hex'], algorithm [= 'sha1']);
+// tools.hash(value [= random], encoding [= 'hex'], algorithm [= 'sha1']);
+var h = tools.hash('name'); 
 ```
 
 ### Object
