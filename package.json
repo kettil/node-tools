@@ -11,7 +11,7 @@
     "underscore": "1.7"
   },
   "devDependencies": {
-    "assertthat": "0.3",
+    "assertthat": "0.5",
     "cases": "0.1",
     "grunt": "0.4",
     "grunt-contrib-jshint": "0.11",
