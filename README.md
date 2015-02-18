@@ -15,7 +15,7 @@ $ npm install kettil-tools
 
 ### Path
  
-#### root(*path)
+#### root([path1[, path2[, ...]]])
 
 Returns the path of the main project.
 
@@ -45,7 +45,7 @@ var r5 = tools.root('/lib', '..', './public') // => path_to/project2/public
 
 ### Crypto
 
-#### hash([value], [encoding], [algorithm])
+#### hash([value[, encoding[, [algorithm]]])
 
 The function returns a hash.
 The [node.js crypto module](http://nodejs.org/api/crypto.html#crypto_class_hash) is used.
