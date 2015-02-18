@@ -74,6 +74,18 @@ var o = tools.defaults({ a: { b: 1 } }, { a: { b: 0, c: 't' }, d: true });
 // o = { a: { b: 1, c: 't' }, d: true }
 ```
 
+#### get(options, key)
+
+The function extracted from a deeply nested object the value and returns it.
+
+```
+var o = tools.get({ a: { b: { c: { d: 1 }}}}, 'a.b');
+// o = { c: { d: 1 }}
+
+var o = tools.get({ a: { b: { c: { d: 1 }}}}, 'a.b.c');
+// o = { d: 1 }
+```
+
 #### removedUndefined(object)
 
 The function removes all undefined entries from an object.

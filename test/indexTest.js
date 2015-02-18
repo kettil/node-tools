@@ -150,6 +150,105 @@ describe('defaults()', function () {
 
 });
 
+describe('get()', function () {
+    var options;
+    beforeEach(function() {
+        options = {
+            a: {
+                b: {
+                    c: undefined,
+                    d: false,
+                    e: {
+                        f: 'a',
+                        g: 42
+                    }
+                },
+                10: [1, 2, 3]
+            },
+            i: function() {}
+        };
+    });
+    afterEach(function() {
+        options = undefined;
+    });
+
+    it('- test with empty key => ok', function () {
+        var actual = tools.get(options, '');
+        assert.that(actual).is.equalTo(options);
+    });
+    it('- test with wrong key (number) => exception', function () {
+        var actual = function() {
+            tools.get(options, 1);
+        };
+        assert.that(actual).is.throwing('Key is not a string [type: "number"]');
+    });
+    it('- test with wrong key (array) => exception', function () {
+        var actual = function() {
+            tools.get(options, []);
+        };
+        assert.that(actual).is.throwing('Key is not a string [type: "object"]');
+    });
+    it('- test with one key => ok', function () {
+        var actual = tools.get(options, 'i');
+        assert.that(actual).is.equalTo(options.i);
+    });
+    it('- test with two keys, part 1 => ok', function () {
+        var actual = tools.get(options, 'a.b');
+        assert.that(actual).is.equalTo(options.a.b);
+    });
+    it('- test with two keys, part 2 => ok', function () {
+        var actual = tools.get(options, 'a.10');
+        assert.that(actual).is.equalTo(options.a['10']);
+    });
+    it('- test with three keys, part 1 => ok', function () {
+        var actual = tools.get(options, 'a.b.c');
+        assert.that(actual).is.undefined();
+    });
+    it('- test with three keys, part 2 => ok', function () {
+        var actual = tools.get(options, 'a.b.d');
+        assert.that(actual).is.false();
+    });
+    it('- test with three keys, part 3 => ok', function () {
+        var actual = tools.get(options, 'a.b.e');
+        assert.that(actual).is.equalTo(options.a.b.e);
+    });
+    it('- test with three keys, part 4 => ok', function () {
+        var actual = tools.get(options, 'a.10.2');
+        assert.that(actual).is.equalTo(options.a['10'][2]);
+    });
+    it('- test with number as options => exception', function () {
+        var actual = function() {
+            tools.get(100, '1');
+        };
+        assert.that(actual).is.throwing('Options is not a object [type: "number"]');
+    });
+    it('- test with unknown key, part 1 => exception', function () {
+        var actual = function() {
+            tools.get(options, 'a.b.c.d');
+        };
+        assert.that(actual).is.throwing('Options with the key "a.b.c" is not a object [key: "a.b.c.d"]');
+    });
+    it('- test with unknown key, part 2 => exception', function () {
+        var actual = function() {
+            tools.get(options, 'a.b.e.f.g');
+        };
+        assert.that(actual).is.throwing('Options with the key "a.b.e.f" is not a object [key: "a.b.e.f.g"]');
+    });
+    it('- test with unknown key, part 3 => exception', function () {
+        var actual = function() {
+            tools.get(options, 'a.b.h');
+        };
+        assert.that(actual).is.throwing('Options with the key "a.b.h" is not defined [key: "a.b.h"]');
+    });
+    it('- test with unknown key, part 4 => exception', function () {
+        var actual = function() {
+            tools.get(options, 'a.b.h.j');
+        };
+        assert.that(actual).is.throwing('Options with the key "a.b.h" is not defined [key: "a.b.h.j"]');
+    });
+
+});
+
 describe('removedUndefined()', function () {
 
     it('- test for removal of undefined entries, part 1 => ok', function () {

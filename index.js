@@ -56,6 +56,32 @@ var defaults = tools.defaults = function(object, defaultObject) {
     return _.defaults(depth, object, defaultObject);
 };
 
+tools.get = function(options, key) {
+    var path = [];
+    if (!_.isString(key)) {
+        throw new Error('Key is not a string [type: "' + (typeof key) + '"]');
+    }
+    if (!_.isObject(options)) {
+        throw new Error('Options is not a object [type: "' + (typeof options) + '"]');
+    }
+    if (key.length === 0) {
+        return options;
+    }
+    _.each(key.split('.'), function(v) {
+        if (!_.isObject(options)) {
+            throw new Error(
+                'Options with the key "' + path.join('.') + '" is not a object [key: "' + key + '"]'
+            );
+        }
+        path.push(v);
+        if (!_.has(options, v)) {
+            throw new Error('Options with the key "' + path.join('.') + '" is not defined [key: "' + key + '"]');
+        }
+        options = options[v];
+    });
+    return options;
+};
+
 tools.removedUndefined = function(object) {
     var keys = [];
     _.each(object, function(value, key) {
