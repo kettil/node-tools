@@ -147,6 +147,18 @@ describe('defaults()', function () {
         var actual = tools.defaults({ a: 1 }, { a: 2, d: { t: 1, a: { p: 'test'} } });
         assert.that(actual).is.equalTo({ a: 1, d: { t: 1, a: { p: 'test'} } });
     });
+    it('- merging two objects with a array, part 1 => ok', function () {
+        var actual = tools.defaults({ a: [1,2,3] }, { a: 2, d: { t: 1, a: { p: 'test'} } });
+        assert.that(actual).is.equalTo({ a: [1,2,3], d: { t: 1, a: { p: 'test'} } });
+    });
+    it('- merging two objects with a array, part 2 => ok', function () {
+        var actual = tools.defaults({ a: [1,2,3] }, { a: 2, d: { t: [1,3], a: { p: 'test'} } });
+        assert.that(actual).is.equalTo({ a: [1,2,3], d: { t: [1,3], a: { p: 'test'} } });
+    });
+    it('- merging two objects with a array, part 3 => ok', function () {
+        var actual = tools.defaults({ a: [1,2,3], d: { t: ['a']} }, { a: 2, d: { t: [1,3], a: { p: 'test'} } });
+        assert.that(actual).is.equalTo({ a: [1,2,3], d: { t: ['a'], a: { p: 'test'} } });
+    });
 
 });
 

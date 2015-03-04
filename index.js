@@ -49,8 +49,17 @@ tools.hash = function(value, encoding, algorithm) {
 var defaults = tools.defaults = function(object, defaultObject) {
     var depth  = {};
     _.each(object, function(value, key) {
-        if (_.has(defaultObject, key) && !_.isFunction(value) && (_.isObject(value) || _.isArray(value))) {
+        if (_.has(defaultObject, key) && !_.isFunction(value) && !_.isArray(value) && _.isObject(value)) {
             depth[key] = defaults(value, defaultObject[key]);
+        }
+    });
+    _.each(defaultObject, function(value, key) {
+        if (!_.has(object, key) && !_.isFunction(value)) {
+            if (_.isObject(value) && !_.isArray(value)) {
+                depth[key] = defaults({}, value);
+            } else if (_.isArray(value)) {
+                depth[key] = [].concat(value);
+            }
         }
     });
     return _.defaults(depth, object, defaultObject);
