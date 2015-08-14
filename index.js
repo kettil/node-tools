@@ -57,7 +57,7 @@ var defaults = tools.defaults = function(object, defaultObject) {
     for (var i = 0; i < l; i++) {
         var key = k[i];
         if (_.has(object, key) && isObjectOnly(object[key]) && isObjectOnly(defaultObject[key])) {
-            object[key] = _.defaults(object[key], defaultObject[key]);
+            object[key] = defaults(object[key], defaultObject[key]);
         }
     }
 
